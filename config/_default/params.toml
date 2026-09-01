@@ -17,13 +17,8 @@ favicon        = "img/favicon.svg"
         default = "本文采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议"
 
 [widgets]
-    homepage = [
-        { type = "search" },
-        { type = "archives", params = { limit = 5 } },
-        { type = "categories", params = { limit = 10 } },
-        { type = "tag-cloud", params = { limit = 10 } },
-    ]
-    page     = [{ type = "toc" }]
+    homepage = []
+    page     = []
 
 [comments]
     enabled = false

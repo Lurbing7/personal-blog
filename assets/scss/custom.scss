@@ -239,6 +239,9 @@
     grid-template-columns: 1fr;
 }
 @media (min-width: 768px) {
+    .featured-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1024px) {
     .featured-grid { grid-template-columns: repeat(3, 1fr); }
 }
 .featured-card {
@@ -299,6 +302,40 @@
     background: linear-gradient(90deg, var(--accent-color), var(--accent-color-darker));
     z-index: 9999;
     transition: width 0.1s linear;
+}
+
+/* ===== 内容优先布局：隐藏右侧栏，内容区更宽 ===== */
+.right-sidebar {
+    display: none;
+}
+
+/* 文章内折叠目录美化 */
+.article-toc {
+    border: 1px solid var(--card-separator-color);
+    border-radius: 8px;
+    background: var(--card-background);
+    padding: 14px 18px;
+    margin-bottom: 28px;
+    box-shadow: var(--shadow-l1);
+}
+.article-toc summary {
+    cursor: pointer;
+    color: var(--card-text-color-secondary);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+.article-toc nav {
+    font-size: 0.9rem;
+    line-height: 1.8;
+    margin-top: 10px;
+}
+.article-toc a {
+    color: var(--card-text-color-secondary);
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+.article-toc a:hover {
+    color: var(--accent-color);
 }
 
 /* ===== 入场动效（仅 Hero 一个关键元素） ===== */
