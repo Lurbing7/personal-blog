@@ -3,11 +3,7 @@ title: 关于
 description: 关于本站及其作者的一切。
 date: 2026-09-01
 lastmod: 2026-09-01
-menu:
-    main:
-        weight: -90
-        params:
-            icon: user
+url: /about/
 ---
 
 ## 我是谁

@@ -2,6 +2,10 @@ mainSections   = ["post"]
 rssFullContent = true
 favicon        = "img/favicon.svg"
 
+[dateFormat]
+    published   = "2006.01.02"
+    lastUpdated = "2006.01.02"
+
 [footer]
     since = 2026
     customText = "记录学习、工作与经验积累"
@@ -15,6 +19,10 @@ favicon        = "img/favicon.svg"
     [article.license]
         enabled = true
         default = "本文采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议"
+
+[colorScheme]
+    toggle  = true
+    default = "auto"
 
 [widgets]
     homepage = []
