@@ -1,0 +1,55 @@
+{{ define "main" }}
+    {{- $paginator := partial "helper/paginator.html" . -}}
+    {{- $postCount := len (where .Site.RegularPages "Section" "post") -}}
+    {{- $featured := where .Site.RegularPages "Params.featured" true | first 3 -}}
+
+    <section class="hero">
+        <div class="hero-inner">
+            <p class="hero-eyebrow">云忆 · 个人技术博客</p>
+            <h1 class="hero-title">Java 后端工程师，<br>记录技术学习与项目实践</h1>
+            <p class="hero-desc">从企业级项目到 AI 工程实践，把踩过的坑沉淀成可复用的经验。已发布 {{ $postCount }} 篇技术文章，持续更新。</p>
+            <div class="hero-chips">
+                <span>Java</span><span>Spring Boot</span><span>并发</span><span>Redis</span><span>微服务</span><span>AI 工程</span><span>运维</span>
+            </div>
+            <div class="hero-actions">
+                <a class="btn-primary" href="/about/">关于我</a>
+                <a class="btn-ghost" href="https://github.com/Lurbing7">GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    {{ if $featured }}
+    <section class="featured-section">
+        <div class="featured-head">
+            <h2 class="featured-title">精选文章</h2>
+            <a class="featured-more" href="/archives/">全部文章 →</a>
+        </div>
+        <div class="featured-grid">
+            {{ range $featured }}
+            <a class="featured-card" href="{{ .RelPermalink }}">
+                <div class="featured-card-body">
+                    <h3 class="featured-card-title">{{ .Title }}</h3>
+                    <p class="featured-card-desc">{{ .Description | default .Summary | truncate 96 }}</p>
+                    <div class="featured-card-meta">
+                        {{ range .Params.tags | first 3 }}<span class="featured-card-tag">{{ . }}</span>{{ end }}
+                    </div>
+                </div>
+            </a>
+            {{ end }}
+        </div>
+    </section>
+    {{ end }}
+
+    <section class="article-list">
+        {{ range $index, $element := $paginator.Pages }}
+            {{ partial "article-list/default" . }}
+        {{ end }}
+    </section>
+
+    {{- partial "pagination.html" . -}}
+    {{- partial "footer/footer" . -}}
+{{ end }}
+
+{{ define "right-sidebar" }}
+    {{ partial "sidebar/right.html" (dict "Context" . "Scope" "homepage") }}
+{{ end }}

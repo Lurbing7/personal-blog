@@ -2,6 +2,7 @@
 title: "Agent、Tool、Workflow 到底什么区别？Spring AI 落地实践"
 description: "Tool、Workflow、Agent 常被混用，实为层层递进的三层结构。用 Spring AI 注解、链式 API、工具调用示例讲清三者区别，给出选型建议与防死循环护栏。"
 date: 2026-09-01
+featured: true
 tags: ["Agent", "Spring AI", "RAG", "LLM"]
 categories: ["AI 工程"]
 ---

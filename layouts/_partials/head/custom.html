@@ -1,0 +1,16 @@
+<script>
+(function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var bar = document.createElement('div');
+    bar.className = 'reading-progress';
+    document.body.appendChild(bar);
+    function update() {
+        var doc = document.documentElement;
+        var total = doc.scrollHeight - doc.clientHeight;
+        bar.style.width = (total > 0 ? (doc.scrollTop / total) * 100 : 0) + '%';
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+})();
+</script>

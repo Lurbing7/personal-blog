@@ -2,6 +2,7 @@
 title: "Redis 分布式锁深挖：从手写 SET NX 到 Redisson 看门狗与红锁争议"
 description: "为什么需要分布式锁、手写版的三要素（唯一值/过期时间/Lua 原子释放）、业务超时如何续期、Redisson 看门狗与可重入实现，以及 RedLock 红锁的争议与幂等兜底。面试高频，一篇讲透。"
 date: 2026-09-01
+featured: true
 tags: ["Redis", "分布式锁", "Redisson", "并发"]
 categories: ["Java"]
 ---

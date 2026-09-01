@@ -4,6 +4,7 @@ favicon        = "img/favicon.svg"
 
 [footer]
     since = 2026
+    customText = "记录学习、工作与经验积累"
 
 [sidebar]
     emoji    = "☁️"

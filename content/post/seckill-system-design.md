@@ -2,6 +2,7 @@
 title: "秒杀系统设计全链路：从前端挡流到 Redis 原子扣库存"
 description: "秒杀的本质矛盾是海量瞬时请求对撞有限库存。按前端挡流、网关限流、MQ 削峰、Redis Lua 原子扣库存四层拆解全链路，讲透防超卖设计与 1 万到 100 万 QPS 的架构演进。"
 date: 2026-09-01
+featured: true
 tags: ["系统设计", "高并发", "Redis", "消息队列"]
 categories: ["系统设计"]
 ---
