@@ -51,7 +51,7 @@ if (order.getStatus() != OrderStatus.PAID) {
 
 升级后，AI Review 会在审查过程中主动搜索：`canRefund` 在项目中的使用位置、`OrderStatus.PAID` 和 `REFUNDING` 的引用处、其他 Service 和测试里的相关代码。工具链是 `grep`（全文搜索）+ `rg`（高性能搜索）+ `glob`（文件匹配）+ `view`（文件查看）。
 
-这一步的转变是本质性的：AI 不再只评价写出来的代码，而是检查它触碰了哪些既有约定，比如领域方法、状态机和历史数据格式。
+AI 不再只评价写出来的代码，而是检查它触碰了哪些既有约定，比如领域方法、状态机和历史数据格式。
 
 另一个例子是 DTO 类型修改。开发者把订单详情响应的金额字段从 `Long` 改成 `BigDecimal`：
 

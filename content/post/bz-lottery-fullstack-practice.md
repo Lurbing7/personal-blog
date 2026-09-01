@@ -120,7 +120,7 @@ failed to resolve reference "docker.io/library/nginx:1.29-alpine": not found
 
 ## 服务器准备踩坑
 
-第一次碰 Linux 服务器部署，踩了一串真实坑：
+第一次碰 Linux 服务器部署，接连遇到好几个问题：
 
 - **部署用户没有 sudo**：`deploy is not in the sudoers file`，系统软件改用 root 安装，`deploy` 只负责 Docker 部署
 - **Ubuntu 没有 yum**：`Command 'yum' not found`，Ubuntu/Debian 系用 `apt`
@@ -152,7 +152,7 @@ Docker Compose version 2.40.3
 
 ## 小结
 
-这个项目最有价值的不是功能，而是一人项目的工程决策：
+这个项目的收获不在功能，而在一人项目的工程决策：
 
 1. **不先上 Jenkins 和镜像仓库**：GitHub Actions 免费额度 + SSH + Docker Compose，够早期使用，出问题能直接 SSH 看日志
 2. **镜像传输方案**：生产环境网络拉不动 Docker Hub 时，用 `docker save/load` 把镜像随发布包传过去，是真实生产里会遇到的网络约束

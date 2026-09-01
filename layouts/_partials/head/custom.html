@@ -1,4 +1,5 @@
 <script>
+/* 阅读进度条 */
 (function () {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var bar = document.createElement('div');
@@ -12,5 +13,45 @@
     window.addEventListener('scroll', update, { passive: true });
     window.addEventListener('resize', update);
     update();
+})();
+</script>
+<script>
+/* 代码块语言标签 */
+(function () {
+    document.querySelectorAll('.highlight').forEach(function (block) {
+        if (block.querySelector('.code-lang')) return;
+        var code = block.querySelector('code');
+        if (!code) return;
+        var lang = code.getAttribute('data-lang') || '';
+        if (!lang) {
+            var m = (code.className || '').match(/language-([\w+-]+)/);
+            if (m) lang = m[1];
+        }
+        if (!lang) return;
+        var label = document.createElement('span');
+        label.className = 'code-lang';
+        label.textContent = lang;
+        block.classList.add('has-lang');
+        block.appendChild(label);
+    });
+})();
+</script>
+<script>
+/* 返回顶部 */
+(function () {
+    var btn = document.createElement('button');
+    btn.className = 'back-to-top';
+    btn.setAttribute('aria-label', '返回顶部');
+    btn.textContent = '↑';
+    document.body.appendChild(btn);
+    function toggle() {
+        if (window.scrollY > 600) btn.classList.add('visible');
+        else btn.classList.remove('visible');
+    }
+    btn.addEventListener('click', function () {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+    window.addEventListener('scroll', toggle, { passive: true });
+    toggle();
 })();
 </script>

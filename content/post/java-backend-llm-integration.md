@@ -128,7 +128,7 @@ public String loadSystemPrompt() {
 
 ## 降级：三道防线，AI 挂了业务不挂
 
-降级是整个设计里最值钱的部分，一共三层防线：
+降级是整套设计里不能省的部分，一共三层防线：
 
 ```text
 第一层：enabled 开关     → AI 关闭时走降级

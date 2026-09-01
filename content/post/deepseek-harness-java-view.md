@@ -51,7 +51,7 @@ Session Log 只做追加写，类比数据库 WAL（Write-Ahead Log），三个�
 
 6 种运行形态：`dsh web`（Web GUI，默认 127.0.0.1:3080）、TUI、Headless（CI/CD 无界面执行）、ACP（Agent Client Protocol）、JSON-RPC、Python SDK。同一个运行时，从交互式开发到无人值守流水线都能覆盖。
 
-4 种预设模式，本质是 4 份 YAML 配置：
+4 种预设模式对应 4 份 YAML 配置：
 
 - **Standard**：默认完整能力
 - **PTC**：Code Mode SDK，写 TypeScript 程序，一次 `run_code` 组合多步操作

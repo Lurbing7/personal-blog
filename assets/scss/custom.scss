@@ -309,6 +309,72 @@
     display: none;
 }
 
+/* ===== 代码块语言标签 ===== */
+.highlight {
+    position: relative;
+}
+.code-lang {
+    position: absolute;
+    top: 6px;
+    right: 40px;
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    color: var(--card-text-color-tertiary);
+    text-transform: lowercase;
+    pointer-events: none;
+    user-select: none;
+}
+.highlight.has-lang pre {
+    padding-top: 22px;
+}
+
+/* ===== 返回顶部 ===== */
+.back-to-top {
+    position: fixed;
+    right: 20px;
+    bottom: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid var(--card-separator-color);
+    background: var(--card-background);
+    color: var(--card-text-color-secondary);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: var(--shadow-l1);
+    z-index: 998;
+}
+.back-to-top.visible {
+    opacity: 1;
+    transform: none;
+}
+.back-to-top:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+/* ===== 文章排版强化 ===== */
+.article-content h2 {
+    border-left: 3px solid var(--accent-color);
+    padding-left: 12px;
+}
+.article-content blockquote {
+    border-left-color: var(--accent-color);
+}
+.article-content table th {
+    background: rgba(var(--link-background-color), 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+        transition: none;
+    }
+}
+
 /* 文章内折叠目录美化 */
 .article-toc {
     border: 1px solid var(--card-separator-color);

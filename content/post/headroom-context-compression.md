@@ -24,7 +24,7 @@ Headroom 的流程可以概括为：
                 本地存储原始数据，LLM 可按需取回
 ```
 
-核心是三个压缩器：SmartCrusher 处理工具调用产生的大量 JSON，保留结构和关键字段；CodeCompressor 做 AST 级代码压缩，支持 Python、JS、Go 等六种语言；Kompress-base 是在 HuggingFace 开源的文本压缩模型，专门在 Agent 对话轨迹上训练。
+压缩由三个组件完成：SmartCrusher 处理工具调用产生的大量 JSON，保留结构和关键字段；CodeCompressor 做 AST 级代码压缩，支持 Python、JS、Go 等六种语言；Kompress-base 是在 HuggingFace 开源的文本压缩模型，专门在 Agent 对话轨迹上训练。
 
 ContentRouter 按内容类型自动路由，CacheAligner 稳定发送前缀、提高缓存命中率。压缩是**可逆**的：原始数据完整留在本地，LLM 需要细节时调用 `headroom_retrieve` 工具取回。数据全程不离开机器，这是它对比托管压缩服务最核心的卖点。
 
@@ -61,19 +61,19 @@ ContentRouter 按内容类型自动路由，CacheAligner 稳定发送前缀、�
 
 Headroom 有四种接入方式。库模式在代码里直接调 `compress()`；代理模式零改动，把任何 OpenAI 兼容客户端指向本地端口；包装模式一行命令包住 Agent；MCP 模式按需提供压缩工具。建议先用 MCP 模式验证效果，再考虑代理模式接管全部流量。
 
-安装配置我踩了五个坑：
+安装配置我遇到五个问题：
 
 - npm 包只是 TypeScript 库，不带 CLI；CLI 在 Python 包里，要 `pip install "headroom-ai[all]"`
 - pip 不在 PATH，或虚拟环境里没装 pip，改用 `python -m pip`，必要时先 `python -m ensurepip --upgrade`
 - Python 3.14 装不上：Rust 核心经 PyO3 绑定，PyO3 0.22.6 最高支持 3.13，换 Python 3.10~3.13 或设置 ABI3 兼容变量
 - CLI 装好不等于 Agent 会用，还要 `headroom mcp install` 注册
-- `wrap codex` 会改 `~/.codex/config.toml` 写入独立 provider，Codex 按 provider 隔离线程历史——看着像 session 全没了，其实是列表切换，不是删除；接入前先备份配置
+- `wrap codex` 会改 `~/.codex/config.toml` 写入独立 provider，Codex 按 provider 隔离线程历史——看着像 session 全没了，只是列表切换，不是删除；接入前先备份配置
 
 ## 代理的生命周期坑
 
 代理模式是「长期配置 + 短期进程」的组合：`config.toml` 里的 provider 配置会一直留着，代理进程关机就消失。Windows 重启后 Codex 仍指向本地 8787 端口，端口却没人在听，表现是发消息失败或 502。
 
-最坑的是端口在监听不等于转发成功。实测里 `GET /v1/models` 返回 502，同一轮的 WebSocket 请求却正常，502 的精确根因最终没有确认。排查要先看端口，再看代理日志有没有入站记录。想继续用，就得每次开机手动起代理或做开机自启动；想省心，直接恢复配置备份，把 provider 切回默认。
+更隐蔽的问题是端口在监听不等于转发成功。实测里 `GET /v1/models` 返回 502，同一轮的 WebSocket 请求却正常，502 的精确根因最终没有确认。排查要先看端口，再看代理日志有没有入站记录。想继续用，就得每次开机手动起代理或做开机自启动；想省心，直接恢复配置备份，把 provider 切回默认。
 
 ## 小结
 

@@ -12,7 +12,7 @@ categories: ["Java"]
 
 `@Cacheable` 是 Spring Boot 提供的缓存注解，把方法返回值缓存到指定缓存（如 Redis），后续相同请求直接从缓存获取，避免重复查询数据库。底层依赖 CacheManager，分布式场景常用 RedisCacheManager 实现。
 
-注解用起来简单，坑都藏在配置和序列化里。最常见的报错是同类 ClassCastException，接着是属性全 null、缓存覆盖、缓存穿透。这篇文章把真实踩过的 7 个坑拆开讲，每个坑都带原因和解决方案。
+注解用起来简单，坑都藏在配置和序列化里。最常见的报错是同类 ClassCastException，接着是属性全 null、缓存覆盖、缓存穿透。这篇文章把遇到的 7 个坑拆开讲，每个坑都带原因和解决方案。
 
 ## 核心机制：两个 Bean 一条序列化链
 
@@ -24,7 +24,7 @@ categories: ["Java"]
 
 第二，序列化统一。注解缓存和手动操作共存在一个项目里，序列化器不一致，一边写入的数据另一边就读不出来。比如 RedisCacheManager 用 FastJson 写入 userCache::123，RedisTemplate 用 JDK 序列化去读，就会抛 ClassCastException，或者解析出乱码、空数据。
 
-配置的核心就一句：保证 RedisCacheManager 和 RedisTemplate 序列化统一，优先使用 FastJson2JsonRedisSerializer，摒弃默认的 JDK 序列化。JDK 序列化存的是 Java 对象二进制，换 JSON 序列化后旧数据无法反序列化，这也是坑 1 和坑 5 的共同根源。
+配置上要保证 RedisCacheManager 和 RedisTemplate 序列化统一，优先使用 FastJson2JsonRedisSerializer，摒弃默认的 JDK 序列化。JDK 序列化存的是 Java 对象二进制，换 JSON 序列化后旧数据无法反序列化，这也是坑 1 和坑 5 的共同根源。
 
 ## Key 生成规则与 SpEL 语法
 

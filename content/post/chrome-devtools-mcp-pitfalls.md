@@ -147,6 +147,6 @@ mcp__playwright__browser_evaluate function="() => document.querySelector('[aria-
 
 Chrome 145+ 之后，远程调试端口不再是"传了参数就生效"。核心规则只有一条：调试参数必须配合非默认的 `--user-data-dir` 使用，否则会被静默忽略。
 
-整套流程的三个关键点：独立用户数据目录保留登录态、端口验证以 `json/version` 为准、MCP 配置改完要重启会话。记牢这三点，Chrome DevTools MCP 连本地浏览器基本不会再卡住。排查的原则是验证而非猜测：端口通没通，直接请求 `/json/version` 一看便知。
+整套流程里值得记的是：独立用户数据目录保留登录态、端口验证以 `json/version` 为准、MCP 配置改完要重启会话。记牢这几条，Chrome DevTools MCP 连本地浏览器基本不会再卡住。排查的原则是验证而非猜测：端口通没通，直接请求 `/json/version` 一看便知。
 
 相关文档：[Chrome DevTools MCP 官方仓库](https://github.com/ChromeDevTools/chrome-devtools-mcp)、[npm 包文档](https://www.npmjs.com/package/chrome-devtools-mcp)、[Chrome 远程调试端口安全策略变更](https://developer.chrome.com/blog/remote-debugging-port)。

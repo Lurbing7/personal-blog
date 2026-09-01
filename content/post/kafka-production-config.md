@@ -18,7 +18,7 @@ Kafka 接入 Spring Boot，默认配置能跑通 demo，但离生产要求还差
 
 ## 生产者：幂等 + acks=all
 
-生产者的核心是两件事：消息不丢、不重。`enable.idempotence: true` 开启幂等，防止重试造成重复写入，但它要求 `acks` 必须是 `-1`（all），两者要一起配。
+生产者要保证两件事：消息不丢、不重。`enable.idempotence: true` 开启幂等，防止重试造成重复写入，但它要求 `acks` 必须是 `-1`（all），两者要一起配。
 
 ```yaml
 spring:

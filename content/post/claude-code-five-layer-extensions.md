@@ -65,7 +65,7 @@ Hook 解决的是「规则写了，但执行不稳定」。规则在文档里，
 - `PreToolUse` → 阻止编辑 `.env`、`credentials`、lock files
 - `PostToolUse: 修改测试文件` → 运行相关测试
 
-Skill 告诉 Agent「遇到这类任务可以这样做」；Hook 告诉 Agent「做完某类动作必须经过这道门」。本质是把 CI、pre-commit、lint-staged 这套工程纪律，重建在 Agent 的工具事件上。
+Skill 告诉 Agent「遇到这类任务可以这样做」；Hook 告诉 Agent「做完某类动作必须经过这道门」。这相当于把 CI、pre-commit、lint-staged 这套工程纪律，重建在 Agent 的工具事件上。
 
 ## 第四层：Subagent，专业判断的并行化
 

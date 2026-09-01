@@ -61,7 +61,7 @@ winget install astral-sh.uv
 uvx --from redis-mcp-server@latest --with mcp<2 redis-mcp-server --url redis://localhost:6379/0
 ```
 
-这里有个坑：`--with mcp<2` 是版本锁定。不加的话，MCP SDK 新版本不兼容会导致启动报错。连云端 Redis 时，把 `redis://` 换成 `rediss://` 加密串。
+这里容易出错：`--with mcp<2` 是版本锁定。不加的话，MCP SDK 新版本不兼容会导致启动报错。连云端 Redis 时，把 `redis://` 换成 `rediss://` 加密串。
 
 **第四步：安装 Skills**（需要 Node.js）：
 
@@ -81,7 +81,7 @@ ACL SETUSER readonlyuser on >mypassword ~* +@read -@write
 
 这条命令创建 `readonlyuser`：`+@read` 只允许读类命令，`-@write` 拒绝写类命令。随后 MCP 连接串换成这个账号。连生产库更要最小权限，别用默认账号。
 
-这是整篇文章最值得提炼的一条原则：**工具越强大，默认权限越要收窄**。AI 直接操作数据库后，错误不再停留在「建议」，而是真实的写操作。先用只读账号验证流程，需要写能力时再按需放开，风险可控得多。
+整篇文章的原则只有一条：**工具越强大，默认权限越要收窄**。AI 直接操作数据库后，错误不再停留在「建议」，而是真实的写操作。先用只读账号验证流程，需要写能力时再按需放开，风险可控得多。
 
 ## 哪些步骤尚未亲自验证
 

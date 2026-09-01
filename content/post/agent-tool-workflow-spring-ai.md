@@ -11,7 +11,7 @@ categories: ["AI 工程"]
 
 ## 背景：三个词，一个糊涂账
 
-做 LLM 应用绕不开三个词：Agent、Tool、Workflow。面试问、项目评审问、技术文章里也到处是。但很多人把它们当成并列的三个方案来讨论，其实三者是层层递进的关系。
+做 LLM 应用绕不开三个词：Agent、Tool、Workflow。面试问、项目评审问、技术文章里也到处是。但很多人把它们当成并列的三个方案来讨论，三者是层层递进的关系。
 
 一句话概括：**Tools 是积木，Workflow 是按图纸拼好的流水线，Agent 是会自己看图纸自己拼的工人**。这个辨析思路最早来自一篇公开的[面试真题解析](https://mp.weixin.qq.com/s/EdF_pyb_Ci7BFGXQbRsRoA)。本文用 Spring AI 的代码，把三个概念落到具体 API 上。
 

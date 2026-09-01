@@ -28,7 +28,7 @@ domain/**/*.md → MarkdownChunker(标题栈) → embedding → pgvector
 用户提问 → 混合检索(向量+关键词) → RRF 融合 → RAG prompt → LLM → 带引用回答
 ```
 
-两个模型各司其职：embedding 用智谱 `embedding-3`（1024 维），chat 用 DeepSeek `deepseek-chat`。为什么拆开，后面踩坑部分细说。
+两个模型各司其职：embedding 用智谱 `embedding-3`（1024 维），chat 用 DeepSeek `deepseek-chat`。为什么拆开，后面复盘部分细说。
 
 ## 三个关键设计
 
@@ -90,7 +90,7 @@ System prompt 三条硬规定：
 
 Spring AI 默认假设 OpenAI 的路径结构，会自动拼 `/v1/...`。智谱的端点是 `open.bigmodel.cn/api/paas/v4/`，直接配 base-url 会 404。处理方式：base-url 配到 `/api/paas`，显式覆盖 `chat.completions-path=/v4/chat/completions` 和 `embedding.embeddings-path=/v4/embeddings`。
 
-这是接国产兼容服务最常见的坑，也是真实生产里会遇到的。
+接国产兼容服务时，这个路径问题很常见，生产环境里也会遇到。
 
 ### 框架抽象 ≠ 文档一致
 
@@ -127,4 +127,4 @@ Spring AI 默认假设 OpenAI 的路径结构，会自动拼 `/v1/...`。智谱�
 
 这个项目用真实需求驱动：知识库检索痛点 → 混合检索方案 → 端到端可验证。全量索引成本不到 1 元，验证了个人规模 RAG 的可行性。
 
-最大的收获不是架构，而是踩坑：第三方 API 兼容、框架版本差异、网络环境约束，这些细节才是面试和实际交付里真正拉开差距的地方。
+最大的收获不是架构，而是处理第三方 API 兼容、框架版本差异、网络环境约束这些问题的过程。这些细节在面试和实际交付里最容易见高下。
