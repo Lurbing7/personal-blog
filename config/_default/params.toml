@@ -1,12 +1,14 @@
 mainSections   = ["post"]
 rssFullContent = true
+favicon        = "img/favicon.svg"
 
 [footer]
     since = 2026
 
 [sidebar]
-    emoji    = "✏️"
-    subtitle = "Java 后端开发，记录技术学习与项目实践"
+    emoji    = "☁️"
+    subtitle = "Java 后端开发 · 技术学习与项目实践"
+    avatar   = "img/avatar.svg"
 
 [article]
     [article.license]
