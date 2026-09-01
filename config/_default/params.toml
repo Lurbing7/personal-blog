@@ -1,0 +1,29 @@
+mainSections   = ["post"]
+rssFullContent = true
+
+[footer]
+    since = 2026
+
+[sidebar]
+    emoji    = "✏️"
+    subtitle = "Java 后端开发，记录技术学习与项目实践"
+
+[article]
+    [article.license]
+        enabled = true
+        default = "本文采用 [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) 许可协议"
+
+[widgets]
+    homepage = [
+        { type = "search" },
+        { type = "archives", params = { limit = 5 } },
+        { type = "categories", params = { limit = 10 } },
+        { type = "tag-cloud", params = { limit = 10 } },
+    ]
+    page     = [{ type = "toc" }]
+
+[comments]
+    enabled = false
+
+[cookies]
+    enabled = false

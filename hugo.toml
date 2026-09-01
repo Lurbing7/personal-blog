@@ -1,0 +1,9 @@
+baseURL = 'https://lurbing7.github.io/personal-blog/'
+locale = 'zh-cn'
+defaultContentLanguage = 'zh'
+hasCJKLanguage = true
+title = '我的技术博客'
+theme = 'hugo-theme-stack'
+
+[pagination]
+    pagerSize = 10
