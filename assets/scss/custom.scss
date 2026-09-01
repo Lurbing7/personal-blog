@@ -153,13 +153,13 @@
     margin-bottom: 14px;
 }
 .hero-title {
-    font-size: 2.1rem;
+    font-size: 2.3rem;
     line-height: 1.35;
     margin-bottom: 16px;
     color: var(--card-text-color-main);
 }
 @media (min-width: 768px) {
-    .hero-title { font-size: 2.7rem; }
+    .hero-title { font-size: 2.6rem; }
 }
 .hero-desc {
     color: var(--body-text-color);
@@ -225,7 +225,7 @@
     margin-bottom: 16px;
 }
 .featured-title {
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     color: var(--card-text-color-main);
 }
 .featured-more {
@@ -241,8 +241,8 @@
 @media (min-width: 768px) {
     .featured-grid { grid-template-columns: repeat(2, 1fr); }
 }
-@media (min-width: 1024px) {
-    .featured-grid { grid-template-columns: repeat(3, 1fr); }
+.featured-card:nth-child(3):last-child {
+    grid-column: 1 / -1;
 }
 .featured-card {
     display: block;
@@ -260,9 +260,9 @@
     border-color: var(--accent-color);
 }
 .featured-card-title {
-    font-size: 1.05rem;
-    line-height: 1.5;
-    margin-bottom: 8px;
+    font-size: 1.7rem;
+    line-height: 1.45;
+    margin-bottom: 10px;
     color: var(--card-text-color-main);
     transition: color 0.18s ease;
 }
@@ -270,7 +270,7 @@
     color: var(--accent-color);
 }
 .featured-card-desc {
-    font-size: 0.88rem;
+    font-size: 1.02rem;
     line-height: 1.65;
     color: var(--card-text-color-secondary);
     margin-bottom: 14px;
@@ -285,11 +285,25 @@
     gap: 6px;
 }
 .featured-card-tag {
-    font-size: 0.75rem;
+    font-size: 0.8rem;
     padding: 3px 10px;
     border-radius: 999px;
     background: rgba(var(--link-background-color), 0.08);
     color: var(--card-text-color-tertiary);
+}
+
+/* ===== 列表标题与摘要：收敛到克制的字号（主题默认偏大） ===== */
+.article-list .article-title {
+    font-size: 1.6rem;
+}
+.article-list .article-subtitle {
+    font-size: 1.08rem;
+}
+.article-meta,
+.article-meta time,
+.article-meta a,
+.article-meta span {
+    font-size: 1rem;
 }
 
 /* ===== 阅读进度条 ===== */
