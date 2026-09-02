@@ -1,0 +1,190 @@
+---
+import Nav from "@components/nav.astro";
+import Footer from "@components/footer.astro";
+import { u } from "@/lib/posts";
+
+interface Props {
+  title: string;
+  description?: string;
+  ogType?: string;
+}
+
+const {
+  title,
+  description = "云忆 · Java 后端工程师的个人技术博客，记录技术学习、项目实践与踩坑经验",
+  ogType = "website",
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const basePath = import.meta.env.BASE_URL;
+// 字体文件路径需要带 base 前缀，通过 CSS 变量注入 @font-face
+const jbmVars = [
+  `--jbm-r:url('${basePath}fonts/JetBrainsMono-Regular.woff2')`,
+  `--jbm-m:url('${basePath}fonts/JetBrainsMono-Medium.woff2')`,
+  `--jbm-b:url('${basePath}fonts/JetBrainsMono-Bold.woff2')`,
+  `--jbm-i:url('${basePath}fonts/JetBrainsMono-Italic.woff2')`,
+].join(";");
+---
+
+<!doctype html>
+<html lang="zh-CN" style={jbmVars}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#101010" />
+    <link rel="icon" type="image/svg+xml" href={u("/favicon.svg")} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="云忆" />
+    <!-- Montserrat 非阻塞加载：国内网络不稳定时不阻塞渲染 -->
+    <script is:inline>
+      (function () {
+        var l = document.createElement("link");
+        l.rel = "stylesheet";
+        l.href = "https://fonts.cdnfonts.com/css/montserrat";
+        l.media = "print";
+        l.onload = function () {
+          l.media = "all";
+        };
+        document.head.appendChild(l);
+      })();
+    </script>
+  </head>
+  <body class="bg-[var(--background)] text-[var(--white)]" data-base={basePath}>
+    <Nav />
+    <slot />
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  /* 自托管 JetBrains Mono（本地字体包，避免外部字体 CDN 依赖；路径由 --jbm-* 注入 base） */
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: var(--jbm-r) format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: var(--jbm-m) format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: var(--jbm-b) format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "JetBrains Mono";
+    src: var(--jbm-i) format("woff2");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+  }
+
+  :root {
+    --background: #101010;
+    --sec: #a476ff;
+    --white: #dfdfdf;
+    --white-icon: rgba(243, 243, 243, 0.6);
+    --white-icon-tr: rgba(243, 243, 243, 0.08);
+    --mono-font: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
+      "Courier New", monospace;
+  }
+
+  * {
+    font-family:
+      "Montserrat",
+      "PingFang SC",
+      "Hiragino Sans GB",
+      "Microsoft YaHei",
+      system-ui,
+      sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* 等宽字体：代码、日期、编号、键盘提示 */
+  code,
+  pre,
+  kbd,
+  samp,
+  time,
+  .tabular-nums {
+    font-family: var(--mono-font);
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  svg,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  ::selection {
+    background-color: var(--sec);
+    color: var(--background);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--sec);
+    outline-offset: 3px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #151515;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2c2c2c;
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--sec);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2c2c2c #151515;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>

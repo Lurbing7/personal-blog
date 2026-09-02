@@ -1,0 +1,198 @@
+---
+import { u } from "@/lib/posts";
+
+interface NavItem {
+  label: string;
+  href: string;
+  icon: string;
+}
+
+const navItems: NavItem[] = [
+  {
+    label: "首页",
+    href: u("/"),
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M21 20C21 20.5523 20.5523 21 20 21H4C3.44772 21 3 20.5523 3 20V9.48907C3 9.18048 3.14247 8.88917 3.38606 8.69972L11.3861 2.47749C11.7472 2.19663 12.2528 2.19663 12.6139 2.47749L20.6139 8.69972C20.8575 8.88917 21 9.18048 21 9.48907V20ZM19 19V9.97815L12 4.53371L5 9.97815V19H19Z"/></svg>`,
+  },
+  {
+    label: "文章",
+    href: u("/#posts"),
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM4 5V19H20V5H4ZM6 7H18V9H6V7ZM6 11H18V13H6V11ZM6 15H14V17H6V15Z"/></svg>`,
+  },
+  {
+    label: "归档",
+    href: u("/archives/"),
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M2 5C2 4.44772 2.44772 4 3 4H21C21.5523 4 22 4.44772 22 5V9C22 9.55228 21.5523 10 21 10H20V20C20 20.5523 19.5523 21 19 21H5C4.44772 21 4 20.5523 4 20V10H3C2.44772 10 2 9.55228 2 9V5ZM6 10V19H18V10H6ZM4 6V8H20V6H4ZM8 13H16V15H8V13Z"/></svg>`,
+  },
+  {
+    label: "搜索",
+    href: u("/search/"),
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M18.031 16.6168L22.3137 20.8995L20.8995 22.3137L16.6168 18.031C15.0769 19.263 13.124 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2C15.968 2 20 6.032 20 11C20 13.124 19.263 15.0769 18.031 16.6168ZM16.0245 15.8748C17.2475 14.6146 18 12.8956 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18C12.8956 18 14.6146 17.2475 15.8748 16.0245Z"/></svg>`,
+  },
+  {
+    label: "关于",
+    href: u("/about/"),
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><path d="M4 22C4 17.5817 7.58172 14 12 14C16.4183 14 20 17.5817 20 22H18C18 18.6863 15.3137 16 12 16C8.68629 16 6 18.6863 6 22H4ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 10.315 15.315 13 12 13ZM12 11C14.21 11 16 9.21 16 7C16 4.79 14.21 3 12 3C9.79 3 8 4.79 8 7C8 9.21 9.79 11 12 11Z"/></svg>`,
+  },
+];
+---
+
+<div class="flex justify-center w-full">
+  <nav
+    id="main-nav"
+    class="fixed left-1/2 -translate-x-1/2 z-[100] bg-[var(--background)] border border-1 border-transparent backdrop-blur-xl transition-all duration-500 ease-in-out md:top-6 md:bottom-auto bottom-0 w-[80%]"
+  >
+    <div class="container mx-auto flex justify-center items-center p-3">
+      <ul class="flex w-full justify-between md:space-x-6 md:justify-center md:gap-10 gap-4">
+        {
+          navItems.map((item) => (
+            <li class="flex-1 md:flex-none">
+              <a
+                href={item.href}
+                class="flex flex-col items-center gap-1 text-[var(--white-icon)] transition-colors text-xs md:text-base relative group"
+              >
+                <div class="absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 scale-0 opacity-0 bg-[#A9FF5B] nav-indicator hidden md:block" />
+                <span class="md:hidden flex items-center justify-center w-6 h-6">
+                  <fragment set:html={item.icon} />
+                </span>
+                <span class="hidden md:inline-block">{item.label}</span>
+                <span class="md:hidden text-[10px]">{item.label}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<style>
+  nav {
+    transform: translateX(-50%);
+    background-color: var(--background);
+    transition:
+      background-color 0.3s ease,
+      border-radius 0.3s ease,
+      border-color 0.3s ease;
+  }
+
+  nav.scrolling {
+    background-color: var(--component-bg);
+    border-color: #ffffff10;
+    border-radius: 9999px;
+  }
+
+  nav a.active .nav-indicator {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+
+  nav a.active {
+    color: white !important;
+  }
+
+  @media (max-width: 767px) {
+    nav {
+      width: 100% !important;
+      transform: translateX(-50%);
+      bottom: 0;
+      left: 50%;
+      position: fixed;
+      border-radius: 1rem 1rem 0 0;
+      border-color: #ffffff10;
+    }
+
+    nav.scrolling {
+      border-radius: 1rem 1rem 0 0;
+      background-color: var(--component-bg);
+    }
+
+    body {
+      padding-bottom: 70px;
+    }
+  }
+</style>
+
+<script>
+  const nav = document.getElementById("main-nav");
+  const maxScroll = 1000;
+  let rafId: number | null = null;
+
+  function updateNav() {
+    if (window.scrollY > 0) {
+      nav?.classList.add("scrolling");
+
+      const scrollProgress = Math.min(window.scrollY / maxScroll, 1);
+      const easeProgress = 1 - Math.pow(1 - scrollProgress, 4);
+
+      const minWidth = 528;
+      const maxWidth = window.innerWidth * 0.8;
+      const currentWidth = maxWidth - (maxWidth - minWidth) * easeProgress;
+
+      if (window.innerWidth >= 768) {
+        nav?.style.setProperty("width", `${currentWidth}px`);
+      }
+    } else {
+      nav?.classList.remove("scrolling");
+      nav?.style.setProperty("width", "80%");
+    }
+    rafId = null;
+  }
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!rafId) {
+        rafId = requestAnimationFrame(updateNav);
+      }
+    },
+    { passive: true }
+  );
+
+  const base = document.body.getAttribute("data-base") || "/";
+
+  // 锚点平滑滚动：支持同页锚点与跨页锚点（/xxx#id）
+  document.querySelectorAll('#main-nav a[href*="#"]').forEach((anchor) => {
+    anchor.addEventListener("click", (e) => {
+      e.preventDefault();
+      const el = e.currentTarget as HTMLAnchorElement;
+      const href = el.getAttribute("href") || "";
+      const hashIndex = href.indexOf("#");
+      const pathPart = href.slice(0, hashIndex).replace(/\/+$/, "");
+      const targetId = href.slice(hashIndex + 1);
+      const currentPath = window.location.pathname.replace(/\/+$/, "") || "/";
+      const targetElement = document.getElementById(targetId);
+      if ((pathPart === "" || pathPart === currentPath) && targetElement) {
+        targetElement.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+      // 跨页锚点：跳转目标页再定位
+      window.location.href = base + "/" + (targetId ? "#" + targetId : "");
+    });
+  });
+
+  // 当前路径高亮
+  document.addEventListener("DOMContentLoaded", () => {
+    const path = window.location.pathname.replace(/\/+$/, "") || "/";
+    nav?.querySelectorAll("a").forEach((link) => {
+      const href = link.getAttribute("href")?.split("#")[0].replace(/\/+$/, "") || "/";
+      if (href === path) link.classList.add("active");
+    });
+    // 首页锚点滚动高亮
+    const sections = document.querySelectorAll("section[id]");
+    if (sections.length) {
+      const navLinks = Array.from(nav?.querySelectorAll('a[href*="#"]') || []);
+      const observerOptions = { threshold: 0.4 };
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            navLinks.forEach((link) => link.classList.remove("active"));
+            const id = entry.target.getAttribute("id");
+            const activeLink = navLinks.find((l) => l.getAttribute("href")?.split("#")[1] === id);
+            if (activeLink) activeLink.classList.add("active");
+          }
+        });
+      }, observerOptions);
+      sections.forEach((section) => observer.observe(section));
+    }
+  });
+</script>

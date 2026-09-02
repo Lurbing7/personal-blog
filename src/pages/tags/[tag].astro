@@ -1,0 +1,49 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getAllPosts, formatDate, postSlug, termSlug, u } from "@/lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  const names = [...new Set(posts.flatMap((p) => p.data.tags))].filter(
+    (n): n is string => typeof n === "string" && n.trim().length > 0
+  );
+  return names.map((name) => ({
+    params: { tag: termSlug(name) },
+    props: { name, posts: posts.filter((p) => p.data.tags.includes(name)) },
+  }));
+}
+
+const { name, posts } = Astro.props;
+---
+
+<Layout
+  title={`标签 ${name} · 云忆`}
+  description={`标签「${name}」下的全部文章`}
+>
+  <main class="max-w-3xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+    <p class="text-lg text-[var(--sec)] mb-2 tracking-wide">标签</p>
+    <h1 class="text-3xl md:text-4xl font-semibold text-[var(--white)] mb-2">#{name}</h1>
+    <p class="text-sm text-[var(--white-icon)] mb-10">共 {posts.length} 篇</p>
+
+    <div class="border-t border-[#ffffff10]">
+      {
+        posts.map((post) => (
+          <article class="border-b border-[#ffffff10]">
+            <a
+              href={u(`/post/${postSlug(post)}/`)}
+              class="block py-5 hover:bg-[#ffffff08] rounded-lg px-2 -mx-2 transition-colors"
+            >
+              <time class="text-xs text-[var(--white-icon)] tabular-nums">{formatDate(post.data.date)}</time>
+              <h2 class="mt-2 text-xl font-semibold text-[var(--white)] hover:text-[var(--sec)] transition-colors">
+                {post.data.title}
+              </h2>
+              <p class="mt-1.5 text-sm text-[var(--white-icon)] leading-relaxed line-clamp-2">
+                {post.data.description}
+              </p>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

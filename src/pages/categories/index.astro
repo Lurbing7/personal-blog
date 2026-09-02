@@ -1,0 +1,26 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getCategories, termSlug, u } from "@/lib/posts";
+
+const cats = await getCategories();
+---
+
+<Layout title="文章分类 · 云忆" description="按分类浏览云忆博客的全部技术文章">
+  <main class="max-w-3xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+    <p class="text-lg text-[var(--sec)] mb-2 tracking-wide">分类</p>
+    <h1 class="text-3xl md:text-4xl font-semibold text-[var(--white)] mb-10">文章分类</h1>
+    <div class="flex flex-wrap gap-3">
+      {
+        cats.map((cat) => (
+          <a
+            href={u(`/categories/${encodeURIComponent(termSlug(cat.name))}/`)}
+            class="flex items-center gap-2 px-5 py-3 rounded-xl border border-[var(--white-icon-tr)] bg-[#1414149c] text-[var(--white)] hover:border-[var(--sec)] hover:text-[var(--sec)] transition-all duration-300"
+          >
+            <span class="text-base font-medium">{cat.name}</span>
+            <span class="text-xs text-[var(--white-icon)]">{cat.count} 篇</span>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

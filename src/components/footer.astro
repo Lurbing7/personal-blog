@@ -1,0 +1,54 @@
+---
+import { u } from "@/lib/posts";
+---
+
+<footer class="w-full py-12 border-t border-[#ffffff10] mt-10">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+      <div class="space-y-4">
+        <p class="text-xl font-semibold text-[var(--white)]">云忆</p>
+        <p class="text-sm text-[var(--white-icon)] leading-relaxed">
+          Java 后端工程师的个人技术博客。记录学习、工作与经验积累，把踩过的坑沉淀成可复用的经验。
+        </p>
+      </div>
+
+      <div class="space-y-3">
+        <p class="text-sm text-[var(--white-icon)] tracking-wide">导航</p>
+        <ul class="space-y-2 text-sm text-[var(--white-icon)]">
+          <li><a href={u("/")} class="hover:text-[var(--white)] transition-colors">首页</a></li>
+          <li><a href={u("/archives/")} class="hover:text-[var(--white)] transition-colors">归档</a></li>
+          <li><a href={u("/search/")} class="hover:text-[var(--white)] transition-colors">搜索</a></li>
+          <li><a href={u("/about/")} class="hover:text-[var(--white)] transition-colors">关于</a></li>
+          <li><a href={u("/rss.xml")} class="hover:text-[var(--white)] transition-colors">RSS</a></li>
+        </ul>
+      </div>
+
+      <div class="space-y-3">
+        <p class="text-sm text-[var(--white-icon)] tracking-wide">技术栈</p>
+        <div class="flex flex-wrap gap-2">
+          {
+            ["Java", "Spring Boot", "Redis", "MySQL", "Docker", "Nginx", "Linux", "AI 工程"].map(
+              (tech) => (
+                <span class="px-3 py-1 text-xs rounded-full border border-[var(--white-icon-tr)] text-[var(--white-icon)]">
+                  {tech}
+                </span>
+              )
+            )
+          }
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-10 pt-6 border-t border-[#ffffff10]">
+      <p class="text-center text-sm text-[var(--white-icon)]">
+        <span class="block sm:inline">© {new Date().getFullYear()} 云忆 · 基于 Astro + TailwindCSS 构建</span>
+        <span class="block sm:inline sm:ml-2">
+          Theme by
+          <a href="https://github.com/gothsec" class="hover:text-[var(--white)]">Oscar Hernandez</a>
+          (MIT License) · Fork of
+          <a href="https://github.com/nuonuo-888/portfolio" class="hover:text-[var(--white)]">nuonuo-888/Portfolio</a>
+        </span>
+      </p>
+    </div>
+  </div>
+</footer>

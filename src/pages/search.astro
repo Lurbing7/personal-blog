@@ -1,0 +1,123 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="搜索 · 云忆" description="站内全文搜索">
+  <main class="max-w-3xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+    <p class="text-lg text-[var(--sec)] mb-2 tracking-wide">搜索</p>
+    <h1 class="text-3xl md:text-4xl font-semibold text-[var(--white)] mb-8">站内搜索</h1>
+
+    <div class="relative">
+      <input
+        id="search-input"
+        type="search"
+        placeholder="输入关键词，搜索全部文章…"
+        autocomplete="off"
+        class="w-full px-5 py-4 pr-28 rounded-xl bg-[#1414149c] border border-[var(--white-icon-tr)] text-[var(--white)] placeholder-[var(--white-icon)] focus:outline-none focus:border-[var(--sec)] transition-colors"
+      />
+      <span
+        class="absolute right-4 top-1/2 -translate-y-1/2 text-[11px] px-2 py-1 rounded border border-[var(--white-icon-tr)] text-[var(--white-icon)] pointer-events-none"
+      >
+        Esc
+      </span>
+    </div>
+
+    <p id="search-status" class="mt-5 text-sm text-[var(--white-icon)]" aria-live="polite"></p>
+    <div id="search-results" class="mt-4 border-t border-[#ffffff10]"></div>
+  </main>
+</Layout>
+
+<script is:inline>
+  (function () {
+    var input = document.getElementById("search-input");
+    var status = document.getElementById("search-status");
+    var results = document.getElementById("search-results");
+    if (!input || !status || !results) return;
+
+    var pagefind = null;
+    var timer = null;
+
+    function init() {
+      if (pagefind) return Promise.resolve(pagefind);
+      var base = document.body.getAttribute("data-base") || "/";
+      return import(/* @vite-ignore */ base + "pagefind/pagefind.js").then(function (m) {
+        pagefind = m.default || m.pagefind || m;
+        return pagefind;
+      });
+    }
+
+    function clear() {
+      results.innerHTML = "";
+      status.textContent = "";
+    }
+
+    input.addEventListener("input", function () {
+      var q = input.value.trim();
+      window.clearTimeout(timer);
+      if (!q) {
+        clear();
+        return;
+      }
+      timer = window.setTimeout(function () {
+        status.textContent = "搜索中…";
+        init()
+          .then(function (pf) {
+            return pf.search(q);
+          })
+          .then(function (searchResult) {
+            if (!searchResult || !searchResult.results || searchResult.results.length === 0) {
+              status.textContent = "没有找到与「" + q + "」相关的文章。";
+              results.innerHTML = "";
+              return;
+            }
+            status.textContent = "找到 " + searchResult.results.length + " 条结果";
+            var frag = document.createDocumentFragment();
+            var pending = searchResult.results.map(function (r) {
+              return r.data();
+            });
+            return Promise.all(pending).then(function (items) {
+              items.forEach(function (data) {
+                var article = document.createElement("article");
+                article.className = "border-b border-[#ffffff10]";
+                var a = document.createElement("a");
+                a.href = data.url;
+                a.className =
+                  "block py-5 hover:bg-[#ffffff08] rounded-lg px-2 -mx-2 transition-colors";
+                var title = document.createElement("h2");
+                title.className =
+                  "text-lg font-semibold text-[var(--white)] hover:text-[var(--sec)] transition-colors";
+                title.textContent = data.meta && data.meta.title ? data.meta.title : "未命名";
+                a.appendChild(title);
+                var content = (data.content || "").replace(/\s+/g, " ").trim();
+                var idx = content.toLowerCase().indexOf(q.toLowerCase());
+                if (idx > -1) {
+                  var start = Math.max(0, idx - 40);
+                  var snippet = (start > 0 ? "…" : "") + content.slice(start, idx + 80) + "…";
+                  var p = document.createElement("p");
+                  p.className = "mt-2 text-sm text-[var(--white-icon)] leading-relaxed";
+                  p.textContent = snippet;
+                  a.appendChild(p);
+                }
+                article.appendChild(a);
+                frag.appendChild(article);
+              });
+              results.innerHTML = "";
+              results.appendChild(frag);
+            });
+          })
+          .catch(function (err) {
+            console.error("Pagefind error:", err);
+            status.textContent = "搜索暂时不可用，请稍后再试。";
+          });
+      }, 250);
+    });
+
+    input.addEventListener("keydown", function (e) {
+      if (e.key === "Escape") {
+        input.value = "";
+        clear();
+        input.blur();
+      }
+    });
+  })();
+</script>

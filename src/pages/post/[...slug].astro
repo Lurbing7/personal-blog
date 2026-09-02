@@ -1,0 +1,27 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PostLayout from "@/layouts/PostLayout.astro";
+import { getAllPosts, postSlug } from "@/lib/posts";
+
+export async function getStaticPaths() {
+  const posts = await getAllPosts();
+  return posts.map((post) => ({
+    params: { slug: postSlug(post) },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const posts = await getAllPosts();
+const index = posts.findIndex((p) => p.id === post.id);
+const prev = index > 0 ? posts[index - 1] : null;
+const next = index >= 0 && index < posts.length - 1 ? posts[index + 1] : null;
+---
+
+<Layout
+  title={`${post.data.title} · 云忆`}
+  description={post.data.description}
+  ogType="article"
+>
+  <PostLayout post={post} prev={prev} next={next} />
+</Layout>

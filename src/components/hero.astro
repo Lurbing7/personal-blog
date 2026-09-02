@@ -1,0 +1,143 @@
+---
+import LetterGlitch from "../React/LetterGlitch.tsx";
+import { u } from "@/lib/posts";
+
+interface Props {
+  postCount: number;
+}
+
+const { postCount } = Astro.props;
+
+const technologies = [
+  "Java",
+  "Spring Boot",
+  "Spring Cloud",
+  "并发编程",
+  "Redis",
+  "MySQL",
+  "PostgreSQL",
+  "Kafka",
+  "Docker",
+  "Nginx",
+  "Linux",
+  "Vue 3",
+  "MCP",
+  "LLM 工程",
+];
+---
+
+<section class="pt-24 md:pt-0" id="home">
+  <div class="max-w-5xl mx-auto px-6 md:py-36 py-14">
+    <div class="grid grid-cols-1 lg:grid-cols-[1.3fr_1fr] gap-10 items-center">
+      <div class="space-y-6">
+        <p class="text-sm md:text-base text-[var(--white-icon)] tracking-widest uppercase">
+          云忆 · Java 后端工程师
+        </p>
+        <h1
+          class="text-[var(--white)] text-4xl md:text-6xl font-semibold leading-tight text-pretty"
+        >
+          记录技术学习<br />与项目实践
+        </h1>
+        <p class="text-base md:text-xl text-[var(--white-icon)] leading-relaxed max-w-xl">
+          从企业级项目到 AI 工程实践，把踩过的坑沉淀成可复用的经验。
+          已发布 <span class="text-[var(--sec)] font-semibold">{postCount}</span> 篇技术文章，持续更新。
+        </p>
+        <div class="flex flex-wrap gap-3 pt-2">
+          <a
+            target="_blank"
+            href="https://github.com/Lurbing7"
+            aria-label="GitHub"
+            class="flex items-center gap-2 text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] px-4 py-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                d="M12.001 2C6.47598 2 2.00098 6.475 2.00098 12C2.00098 16.425 4.86348 20.1625 8.83848 21.4875C9.33848 21.575 9.52598 21.275 9.52598 21.0125C9.52598 20.775 9.51348 19.9875 9.51348 19.15C7.00098 19.6125 6.35098 18.5375 6.15098 17.975C6.03848 17.6875 5.55098 16.8 5.12598 16.5625C4.77598 16.375 4.27598 15.9125 5.11348 15.9C5.90098 15.8875 6.46348 16.625 6.65098 16.925C7.55098 18.4375 8.98848 18.0125 9.56348 17.75C9.65098 17.1 9.91348 16.6625 10.201 16.4125C7.97598 16.1625 5.65098 15.3 5.65098 11.475C5.65098 10.3875 6.03848 9.4875 6.67598 8.7875C6.57598 8.5375 6.22598 7.5125 6.77598 6.1375C6.77598 6.1375 7.61348 5.875 9.52598 7.1625C10.326 6.9375 11.176 6.825 12.026 6.825C12.876 6.825 13.726 6.9375 14.526 7.1625C16.4385 5.8625 17.276 6.1375 17.276 6.1375C17.826 7.5125 17.476 8.5375 17.376 8.7875C18.0135 9.4875 18.401 10.375 18.401 11.475C18.401 15.3125 16.0635 16.1625 13.8385 16.4125C14.201 16.725 14.5135 17.325 14.5135 18.2625C14.5135 19.6 14.501 20.675 14.501 21.0125C14.501 21.275 14.6885 21.5875 15.1885 21.4875C19.259 20.1133 21.9999 16.2963 22.001 12C22.001 6.475 17.526 2 12.001 2Z"
+              ></path>
+            </svg>
+            <span class="text-sm font-medium">GitHub</span>
+          </a>
+          <a
+            href={u("/rss.xml")}
+            aria-label="RSS"
+            class="flex items-center gap-2 text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] px-4 py-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="size-6"
+            >
+              <path
+                d="M3 3C12.9411 3 21 11.0589 21 21H18C18 12.7157 11.2843 6 3 6V3ZM3 10C9.07513 10 14 14.9249 14 21H11C11 16.5817 7.41828 13 3 13V10ZM3 17C5.20914 17 7 18.7909 7 21H3V17Z"
+              />
+            </svg>
+            <span class="text-sm font-medium">RSS</span>
+          </a>
+          <a
+            href={u("/archives/")}
+            class="flex items-center gap-2 text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] px-4 py-3 rounded-xl bg-[#1414149c] hover:bg-[var(--white-icon-tr)]"
+          >
+            <span class="text-sm font-medium">全部文章</span>
+            <span class="text-[var(--sec)]">→</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hidden lg:flex justify-center md:h-[320px] h-[240px]">
+        <LetterGlitch
+          client:load
+          glitchColors={["#5e4491", "#A476FF", "#241a38"]}
+          glitchSpeed={33}
+          centerVignette={false}
+          outerVignette={true}
+          smooth={true}
+        />
+      </div>
+    </div>
+
+    <!-- 技术墙 marquee -->
+    <div class="relative overflow-hidden mt-14">
+      <div
+        class="pointer-events-none absolute inset-y-0 left-0 w-20 bg-gradient-to-r from-[var(--background)] to-transparent z-20"
+      ></div>
+      <div
+        class="pointer-events-none absolute inset-y-0 right-0 w-20 bg-gradient-to-l from-[var(--background)] to-transparent z-20"
+      ></div>
+      <div class="flex animate-scroll gap-8 md:gap-14 w-max py-4">
+        {
+          [...technologies, ...technologies, ...technologies].map((tech) => (
+            <span
+              class="text-lg font-medium text-[var(--white-icon)] whitespace-nowrap group-hover:opacity-100"
+            >
+              {tech}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  @keyframes marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-33.333%);
+    }
+  }
+  .animate-scroll {
+    animation: marquee-scroll 48s linear infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .animate-scroll {
+      animation: none;
+    }
+  }
+</style>

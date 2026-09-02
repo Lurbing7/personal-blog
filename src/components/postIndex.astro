@@ -1,0 +1,149 @@
+---
+import type { Post } from "@/lib/posts";
+import type { CatCount } from "@/lib/posts";
+import { formatDate, readingTime, postSlug, u } from "@/lib/posts";
+
+interface Props {
+  posts: Post[];
+  cats: CatCount[];
+}
+
+const { posts, cats } = Astro.props;
+---
+
+<section id="posts" class="py-12 border-t border-[#ffffff10]">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="flex items-end justify-between flex-wrap gap-4 mb-6">
+      <div>
+        <p class="text-lg text-[var(--sec)] mb-2 tracking-wide">文章索引</p>
+        <h2 class="text-3xl md:text-4xl font-semibold text-[var(--white)]">全部文章</h2>
+      </div>
+      <a
+        href={u("/archives/")}
+        class="text-sm text-[var(--white-icon)] hover:text-[var(--sec)] transition-colors"
+      >
+        按年归档 →
+      </a>
+    </div>
+
+    <div class="filter-tabs flex flex-wrap gap-2 mb-6" role="group" aria-label="按分类筛选文章">
+      <button
+        class="filter-tab is-active px-4 py-2 text-sm rounded-full border transition-all duration-200"
+        data-cat="all"
+        aria-pressed="true"
+      >
+        全部 <span class="opacity-60">{posts.length}</span>
+      </button>
+      {
+        cats.map((cat) => (
+          <button
+            class="filter-tab px-4 py-2 text-sm rounded-full border transition-all duration-200"
+            data-cat={cat.name}
+            aria-pressed="false"
+          >
+            {cat.name} <span class="opacity-60">{cat.count}</span>
+          </button>
+        ))
+      }
+    </div>
+
+    <p class="post-count text-xs text-[var(--white-icon)] mb-4" aria-live="polite">
+      共 {posts.length} 篇 · 记录学习、工作与经验积累
+    </p>
+
+    <div class="post-index transition-opacity duration-150 border-t border-[#ffffff10]">
+      {
+        posts.map((post, i) => (
+          <article class="post-row border-b border-[#ffffff10]" data-cat={post.data.categories[0] || ""}>
+            <a
+              href={u(`/post/${postSlug(post)}/`)}
+              class="post-row-link grid grid-cols-[64px_1fr] md:grid-cols-[48px_110px_1fr_130px] gap-x-4 md:gap-x-6 gap-y-1 items-baseline py-5 px-2 md:px-4 -mx-2 md:-mx-4 rounded-lg transition-colors duration-200 hover:bg-[#ffffff08]"
+            >
+              <span class="post-row-num hidden md:block text-xs text-[var(--white-icon)] tabular-nums">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <time class="text-xs text-[var(--white-icon)] tabular-nums">
+                {formatDate(post.data.date)}
+              </time>
+              <span class="post-row-body col-span-2 md:col-span-1 min-w-0">
+                <span class="block text-lg font-semibold text-[var(--white)] leading-snug hover:text-[var(--sec)] transition-colors">
+                  {post.data.title}
+                </span>
+                <span class="block mt-1 text-sm text-[var(--white-icon)] leading-relaxed line-clamp-2">
+                  {post.data.description}
+                </span>
+              </span>
+              <span class="post-row-meta hidden md:flex flex-col items-end gap-1 text-xs text-[var(--white-icon)]">
+                <span class="px-2 py-0.5 rounded-full border border-[var(--white-icon-tr)]">
+                  {post.data.categories[0] || "随笔"}
+                </span>
+                <span>{readingTime(post)} 分钟</span>
+              </span>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="empty-state hidden mt-8 py-10 text-center text-sm text-[var(--white-icon)] border border-dashed border-[var(--white-icon-tr)] rounded-xl">
+      该分类下暂无文章。
+    </p>
+  </div>
+</section>
+
+<script>
+  (() => {
+    const indexEl = document.querySelector<HTMLElement>(".post-index");
+    const countEl = document.querySelector<HTMLElement>(".post-count");
+    const emptyEl = document.querySelector<HTMLElement>(".empty-state");
+    if (!indexEl || !countEl || !emptyEl) return;
+
+    const view = { index: indexEl, count: countEl, empty: emptyEl };
+    const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>(".filter-tab"));
+    const rows = Array.from(document.querySelectorAll<HTMLElement>(".post-row"));
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function currentCat() {
+      const active = tabs.find((t) => t.classList.contains("is-active"));
+      return active ? active.dataset.cat || "all" : "all";
+    }
+
+    function apply() {
+      const cat = currentCat();
+      let shown = 0;
+      rows.forEach((r) => {
+        const show = cat === "all" || r.dataset.cat === cat;
+        r.hidden = !show;
+        if (show) shown++;
+      });
+      view.empty.classList.toggle("hidden", shown !== 0);
+      view.count.textContent =
+        cat === "all"
+          ? `共 ${shown} 篇 · 记录学习、工作与经验积累`
+          : `「${cat}」分类 · ${shown} 篇`;
+    }
+
+    function switchView() {
+      view.index.classList.add("opacity-40");
+      window.setTimeout(() => {
+        apply();
+        view.index.classList.remove("opacity-40");
+      }, reduce ? 0 : 110);
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((t) => {
+          const on = t === tab;
+          t.classList.toggle("is-active", on);
+          t.setAttribute("aria-pressed", on ? "true" : "false");
+          t.classList.toggle("border-[var(--sec)]", on);
+          t.classList.toggle("text-[var(--sec)]", on);
+          t.classList.toggle("border-[var(--white-icon-tr)]", !on);
+          t.classList.toggle("text-[var(--white-icon)]", !on);
+        });
+        switchView();
+      });
+    });
+  })();
+</script>
