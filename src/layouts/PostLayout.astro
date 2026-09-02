@@ -14,7 +14,7 @@ const { Content } = await render(post);
 const minutes = readingTime(post);
 ---
 
-<main class="max-w-3xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+<main class="max-w-4xl mx-auto px-6 pt-28 md:pt-40 pb-16">
   <article>
     <header class="mb-10">
       <div class="flex flex-wrap items-center gap-3 mb-5">
@@ -40,14 +40,14 @@ const minutes = readingTime(post);
       </p>
     </header>
 
-    <details id="post-toc" class="mb-10 rounded-xl border border-[var(--white-icon-tr)] bg-[#1414149c] p-5 open:pb-4">
+    <details id="post-toc" class="mb-10 rounded-xl border border-[var(--white-icon-tr)] bg-[var(--card)] p-5 open:pb-4">
       <summary class="cursor-pointer text-sm text-[var(--white-icon)] select-none hover:text-[var(--white)] transition-colors">
         目录
       </summary>
       <nav id="toc-nav" class="mt-4 text-sm leading-8 max-h-[60vh] overflow-y-auto"></nav>
     </details>
 
-    <div id="article-content" class="prose prose-invert prose-neutral max-w-none prose-headings:text-[var(--white)] prose-p:text-[var(--white-icon)] prose-strong:text-[var(--white)] prose-a:text-[var(--sec)] prose-a:no-underline hover:prose-a:underline prose-blockquote:text-[var(--white-icon)] prose-code:text-[var(--sec)] prose-pre:text-[var(--white)] prose-li:text-[var(--white-icon)] prose-th:text-[var(--white-icon)] prose-td:text-[var(--white-icon)]">
+    <div id="article-content" class="prose prose-neutral max-w-none prose-headings:text-[var(--white)] prose-p:text-[var(--white)] prose-strong:text-[var(--white)] prose-a:text-[var(--sec)] prose-a:font-medium hover:prose-a:underline prose-blockquote:text-[var(--white-icon)] prose-li:text-[var(--white)] prose-th:text-[var(--white-icon)] prose-td:text-[var(--white)]">
       <Content />
     </div>
 
@@ -68,7 +68,7 @@ const minutes = readingTime(post);
       )
     }
 
-    <footer class="mt-12 pt-6 border-t border-[#ffffff10]">
+    <footer class="mt-12 pt-6 border-t border-[var(--line)]">
       <div class="flex flex-col sm:flex-row justify-between gap-4 text-sm">
         {
           prev ? (
@@ -115,21 +115,35 @@ const minutes = readingTime(post);
 </main>
 
 <style is:global>
+  /* 阅读舒适度：正文放大 + 行高放宽 */
+  #article-content {
+    font-size: 1.06rem;
+    line-height: 1.95;
+    color: var(--white);
+  }
+
   /* 代码块细节 */
   #article-content pre {
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--line);
     border-radius: 0.75rem;
     padding: 1rem 1.25rem;
-    font-size: 0.875rem;
-    line-height: 1.7;
+    font-size: 0.9rem;
+    line-height: 1.75;
     overflow-x: auto;
+    background: #f7fcf9;
   }
 
   #article-content :not(pre) > code {
-    background: rgba(164, 118, 255, 0.12);
+    background: rgba(129, 241, 178, 0.4);
+    color: #2b2f7a;
     padding: 0.15em 0.4em;
     border-radius: 0.375rem;
-    font-size: 0.85em;
+    font-size: 0.88em;
+  }
+
+  #article-content pre code {
+    color: inherit;
+    background: none;
   }
 
   #article-content h2 {
@@ -150,7 +164,7 @@ const minutes = readingTime(post);
   }
 
   #article-content hr {
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: var(--line);
   }
 </style>
 
