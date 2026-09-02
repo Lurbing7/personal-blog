@@ -39,7 +39,7 @@ const navItems: NavItem[] = [
 <div class="flex justify-center w-full">
   <nav
     id="main-nav"
-    class="fixed left-1/2 -translate-x-1/2 z-[100] bg-[var(--background)] border border-1 border-transparent backdrop-blur-xl transition-all duration-500 ease-in-out md:top-6 md:bottom-auto bottom-0 w-[80%]"
+    class="fixed left-1/2 -translate-x-1/2 z-[100] bg-[var(--background)] border border-1 border-[var(--white-icon-tr)] shadow-[0_4px_24px_rgba(52,56,144,0.07)] backdrop-blur-xl transition-all duration-500 ease-in-out md:top-6 md:bottom-auto bottom-0 w-[80%]"
   >
     <div class="container mx-auto flex justify-center items-center p-3">
       <ul class="flex w-full justify-between md:space-x-6 md:justify-center md:gap-10 gap-4">
@@ -50,7 +50,7 @@ const navItems: NavItem[] = [
                 href={item.href}
                 class="flex flex-col items-center gap-1 text-[var(--white-icon)] transition-colors text-xs md:text-base relative group"
               >
-                <div class="absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 scale-0 opacity-0 bg-[#A9FF5B] nav-indicator hidden md:block" />
+                <div class="absolute -left-6 top-1/2 -translate-y-1/2 w-2 h-2 rounded-full transition-all duration-300 scale-0 opacity-0 bg-[var(--accent)] nav-indicator hidden md:block" />
                 <span class="md:hidden flex items-center justify-center w-6 h-6">
                   <fragment set:html={item.icon} />
                 </span>
@@ -77,7 +77,7 @@ const navItems: NavItem[] = [
 
   nav.scrolling {
     background-color: var(--component-bg);
-    border-color: #ffffff10;
+    border-color: var(--line);
     border-radius: 9999px;
   }
 
@@ -87,7 +87,8 @@ const navItems: NavItem[] = [
   }
 
   nav a.active {
-    color: white !important;
+    color: var(--sec) !important;
+    font-weight: 600;
   }
 
   @media (max-width: 767px) {
@@ -98,7 +99,7 @@ const navItems: NavItem[] = [
       left: 50%;
       position: fixed;
       border-radius: 1rem 1rem 0 0;
-      border-color: #ffffff10;
+      border-color: var(--line);
     }
 
     nav.scrolling {

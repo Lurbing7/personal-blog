@@ -33,7 +33,7 @@ const jbmVars = [
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#101010" />
+    <meta name="theme-color" content="#ffffff" />
     <link rel="icon" type="image/svg+xml" href={u("/favicon.svg")} />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content={ogType} />
@@ -93,12 +93,23 @@ const jbmVars = [
     font-display: swap;
   }
 
+  /* 设计令牌：白底 + 薄荷绿 + 靛蓝（用户指定色板）
+     #343890 靛蓝：正文/标题/链接强调
+     #81F1B2 薄荷绿：主按钮/选中/高亮填充
+     #BBF5D5 浅薄荷：浅底/边框/卡片
+     #FFFFFF 白：背景 */
   :root {
-    --background: #101010;
-    --sec: #a476ff;
-    --white: #dfdfdf;
-    --white-icon: rgba(243, 243, 243, 0.6);
-    --white-icon-tr: rgba(243, 243, 243, 0.08);
+    --background: #ffffff;
+    --sec: #343890;
+    --white: #343890;
+    --white-icon: #6a6ea8;
+    --white-icon-tr: #a9f2c8;
+    --card: #f2fbf6;
+    --line: #d5efe2;
+    --hover: #eaf9f1;
+    --accent: #81f1b2;
+    --on-accent: #343890;
+    --component-bg: rgba(255, 255, 255, 0.92);
     --mono-font: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, Consolas,
       "Courier New", monospace;
   }
@@ -148,8 +159,8 @@ const jbmVars = [
   }
 
   ::selection {
-    background-color: var(--sec);
-    color: var(--background);
+    background-color: var(--accent);
+    color: var(--on-accent);
   }
 
   :focus-visible {
@@ -161,18 +172,18 @@ const jbmVars = [
     width: 12px;
   }
   ::-webkit-scrollbar-track {
-    background: #151515;
+    background: #f4faf6;
   }
   ::-webkit-scrollbar-thumb {
-    background: #2c2c2c;
+    background: #bfe9d0;
     border-radius: 8px;
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: var(--sec);
+    background: var(--accent);
   }
   * {
     scrollbar-width: thin;
-    scrollbar-color: #2c2c2c #151515;
+    scrollbar-color: #bfe9d0 #f4faf6;
   }
 
   @media (prefers-reduced-motion: reduce) {

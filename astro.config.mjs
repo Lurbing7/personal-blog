@@ -13,7 +13,7 @@ export default defineConfig({
   integrations: [tailwind(), react(), sitemap()],
   markdown: {
     shikiConfig: {
-      theme: "github-dark",
+      theme: "github-light",
       wrap: true,
     },
     rehypePlugins: [rehypeSlug],

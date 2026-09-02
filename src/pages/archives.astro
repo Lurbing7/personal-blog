@@ -25,13 +25,13 @@ const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
             {year}
             <span class="text-sm font-normal text-[var(--white-icon)]">{list.length} 篇</span>
           </h2>
-          <div class="border-t border-[#ffffff10]">
+          <div class="border-t border-[var(--line)]">
             {
               list.map((post) => (
-                <article class="border-b border-[#ffffff10]">
+                <article class="border-b border-[var(--line)]">
                   <a
                     href={u(`/post/${postSlug(post)}/`)}
-                    class="grid grid-cols-[70px_1fr] gap-x-4 items-baseline py-4 hover:bg-[#ffffff08] rounded-lg px-2 -mx-2 transition-colors"
+                    class="grid grid-cols-[70px_1fr] gap-x-4 items-baseline py-4 hover:bg-[var(--hover)] rounded-lg px-2 -mx-2 transition-colors"
                   >
                     <time class="text-xs text-[var(--white-icon)] tabular-nums">
                       {formatDate(post.data.date)}
