@@ -1,0 +1,48 @@
+---
+import type { Post } from "@/lib/posts";
+import { formatDate, readingTime, postSlug, u } from "@/lib/posts";
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+---
+
+<section id="featured" class="py-12 border-t border-[#ffffff10]">
+  <div class="max-w-5xl mx-auto px-6">
+    <p class="text-lg text-[var(--sec)] mb-2 tracking-wide">本期精选</p>
+    <h2 class="text-3xl md:text-4xl font-semibold mb-8 text-[var(--white)]">精选文章</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {
+        posts.map((post, i) => (
+          <a
+            href={u(`/post/${postSlug(post)}/`)}
+            class={`group block rounded-2xl border border-[var(--white-icon-tr)] bg-[#1414149c] p-6 transition-all duration-300 hover:border-[var(--sec)] hover:translate-y-[-4px] ${
+              i === 0 ? "md:col-span-1" : ""
+            }`}
+          >
+            <div class="flex items-center justify-between mb-4">
+              <span class="text-xs px-3 py-1 rounded-full border border-[var(--white-icon-tr)] text-[var(--sec)]">
+                {post.data.categories[0] || "随笔"}
+              </span>
+              <span class="text-xs text-[var(--white-icon)]">
+                {formatDate(post.data.date)}
+              </span>
+            </div>
+            <h3 class="text-xl font-semibold leading-snug text-[var(--white)] mb-3 group-hover:text-[var(--sec)] transition-colors">
+              {post.data.title}
+            </h3>
+            <p class="text-sm text-[var(--white-icon)] leading-relaxed line-clamp-3 mb-4">
+              {post.data.description}
+            </p>
+            <span class="text-xs text-[var(--white-icon)]">
+              阅读约 {readingTime(post)} 分钟
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

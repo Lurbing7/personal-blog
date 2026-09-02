@@ -1,0 +1,19 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Hero from "@components/hero.astro";
+import Featured from "@components/featured.astro";
+import PostIndex from "@components/postIndex.astro";
+import Contact from "@components/contact.astro";
+import { getAllPosts, getFeaturedPosts, getCategories } from "@/lib/posts";
+
+const posts = await getAllPosts();
+const featured = await getFeaturedPosts(3);
+const cats = await getCategories();
+---
+
+<Layout title="云忆 · Java 后端工程师的技术博客">
+  <Hero postCount={posts.length} />
+  {featured.length > 0 && <Featured posts={featured} />}
+  <PostIndex posts={posts} cats={cats} />
+  <Contact />
+</Layout>

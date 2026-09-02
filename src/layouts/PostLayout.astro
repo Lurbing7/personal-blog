@@ -1,0 +1,183 @@
+---
+import { render } from "astro:content";
+import type { Post } from "@/lib/posts";
+import { formatDate, readingTime, postSlug, termSlug, u } from "@/lib/posts";
+
+interface Props {
+  post: Post;
+  prev?: Post | null;
+  next?: Post | null;
+}
+
+const { post, prev, next } = Astro.props;
+const { Content } = await render(post);
+const minutes = readingTime(post);
+---
+
+<main class="max-w-3xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+  <article>
+    <header class="mb-10">
+      <div class="flex flex-wrap items-center gap-3 mb-5">
+        {
+          post.data.categories.map((cat: string) => (
+            <a
+              href={u(`/categories/${encodeURIComponent(termSlug(cat))}/`)}
+              class="text-xs px-3 py-1 rounded-full border border-[var(--white-icon-tr)] text-[var(--sec)] hover:border-[var(--sec)] transition-colors"
+            >
+              {cat}
+            </a>
+          ))
+        }
+        <span class="text-xs text-[var(--white-icon)]">
+          {formatDate(post.data.date)} · 阅读约 {minutes} 分钟
+        </span>
+      </div>
+      <h1 class="text-3xl md:text-4xl font-semibold leading-snug text-[var(--white)]">
+        {post.data.title}
+      </h1>
+      <p class="mt-4 text-base text-[var(--white-icon)] leading-relaxed">
+        {post.data.description}
+      </p>
+    </header>
+
+    <details id="post-toc" class="mb-10 rounded-xl border border-[var(--white-icon-tr)] bg-[#1414149c] p-5 open:pb-4">
+      <summary class="cursor-pointer text-sm text-[var(--white-icon)] select-none hover:text-[var(--white)] transition-colors">
+        目录
+      </summary>
+      <nav id="toc-nav" class="mt-4 text-sm leading-8 max-h-[60vh] overflow-y-auto"></nav>
+    </details>
+
+    <div id="article-content" class="prose prose-invert prose-neutral max-w-none prose-headings:text-[var(--white)] prose-p:text-[var(--white-icon)] prose-strong:text-[var(--white)] prose-a:text-[var(--sec)] prose-a:no-underline hover:prose-a:underline prose-blockquote:text-[var(--white-icon)] prose-code:text-[var(--sec)] prose-pre:text-[var(--white)] prose-li:text-[var(--white-icon)] prose-th:text-[var(--white-icon)] prose-td:text-[var(--white-icon)]">
+      <Content />
+    </div>
+
+    {
+      post.data.tags.length > 0 && (
+        <div class="flex flex-wrap gap-2 mt-10">
+          {
+            post.data.tags.map((tag: string) => (
+              <a
+                href={u(`/tags/${encodeURIComponent(termSlug(tag))}/`)}
+                class="text-xs px-3 py-1 rounded-full border border-[var(--white-icon-tr)] text-[var(--white-icon)] hover:border-[var(--sec)] hover:text-[var(--sec)] transition-colors"
+              >
+                #{tag}
+              </a>
+            ))
+          }
+        </div>
+      )
+    }
+
+    <footer class="mt-12 pt-6 border-t border-[#ffffff10]">
+      <div class="flex flex-col sm:flex-row justify-between gap-4 text-sm">
+        {
+          prev ? (
+            <a
+              href={u(`/post/${postSlug(prev)}/`)}
+              class="group text-[var(--white-icon)] hover:text-[var(--white)] transition-colors max-w-[48%]"
+            >
+              <span class="block text-xs text-[var(--white-icon)] opacity-70 mb-1">← 较新</span>
+              <span class="group-hover:text-[var(--sec)] transition-colors line-clamp-1">{prev.data.title}</span>
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+        {
+          next ? (
+            <a
+              href={u(`/post/${postSlug(next)}/`)}
+              class="group text-right text-[var(--white-icon)] hover:text-[var(--white)] transition-colors max-w-[48%]"
+            >
+              <span class="block text-xs text-[var(--white-icon)] opacity-70 mb-1">较旧 →</span>
+              <span class="group-hover:text-[var(--sec)] transition-colors line-clamp-1">{next.data.title}</span>
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+      </div>
+
+      <p class="mt-8 text-xs text-[var(--white-icon)] leading-relaxed">
+        本文采用
+        <a
+          href="https://creativecommons.org/licenses/by-nc-sa/4.0/"
+          target="_blank"
+          rel="noopener"
+          class="text-[var(--sec)]"
+        >
+          CC BY-NC-SA 4.0
+        </a>
+        许可协议，转载注明出处。
+      </p>
+    </footer>
+  </article>
+</main>
+
+<style is:global>
+  /* 代码块细节 */
+  #article-content pre {
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 0.75rem;
+    padding: 1rem 1.25rem;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  #article-content :not(pre) > code {
+    background: rgba(164, 118, 255, 0.12);
+    padding: 0.15em 0.4em;
+    border-radius: 0.375rem;
+    font-size: 0.85em;
+  }
+
+  #article-content h2 {
+    padding-top: 0.5rem;
+    scroll-margin-top: 120px;
+  }
+
+  #article-content h3 {
+    scroll-margin-top: 120px;
+  }
+
+  #article-content img {
+    border-radius: 0.75rem;
+  }
+
+  #article-content table {
+    font-size: 0.9em;
+  }
+
+  #article-content hr {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+</style>
+
+<script>
+  const nav = document.getElementById("toc-nav");
+  const content = document.getElementById("article-content");
+  if (nav && content) {
+    const headings = Array.from(content.querySelectorAll("h2, h3"));
+    if (headings.length > 1) {
+      const list = document.createElement("ul");
+      list.className = "space-y-1.5";
+      headings.forEach((h) => {
+        const id = h.id || "";
+        if (!id) return;
+        const li = document.createElement("li");
+        li.className = h.tagName === "H3" ? "pl-4" : "";
+        const a = document.createElement("a");
+        a.href = "#" + id;
+        a.textContent = h.textContent || "";
+        a.className =
+          "text-[var(--white-icon)] hover:text-[var(--sec)] transition-colors no-underline";
+        li.appendChild(a);
+        list.appendChild(li);
+      });
+      nav.appendChild(list);
+    } else {
+      document.getElementById("post-toc")?.remove();
+    }
+  }
+</script>

@@ -1,0 +1,81 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout title="关于 · 云忆" description="关于云忆博客及其作者的一切">
+  <main class="max-w-3xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+    <p class="text-lg text-[var(--sec)] mb-2 tracking-wide">关于</p>
+    <h1 class="text-3xl md:text-4xl font-semibold text-[var(--white)] mb-10">关于本站</h1>
+
+    <div class="space-y-12 text-[var(--white-icon)] leading-relaxed">
+      <section>
+        <h2 class="text-2xl font-semibold text-[var(--white)] mb-4">我是谁</h2>
+        <p class="mb-4">
+          Java 后端开发工程师，4 年企业级系统开发与交付经验，正在学习 Go。
+        </p>
+        <ul class="space-y-2 list-disc pl-5">
+          <li>快消行业客户的生产系统：架构搭建、全模块开发、线上运维（约 180 次数据修正与排障）</li>
+          <li>微服务平台的模块重构、Docker 化多环境打包、分布式锁与异步任务基建</li>
+          <li>AI 工程实践：RAG 问答、Agent 工作流、MCP 集成，用 Claude Code / Codex 提效</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-[var(--white)] mb-4">本站是什么</h2>
+        <p class="mb-4">
+          个人博客，记录学习、工作与经验积累。文章按真实项目与真实踩坑写，不发空话。
+        </p>
+        <ul class="space-y-2 list-disc pl-5">
+          <li>项目复盘：Java-RAG 知识库问答、抽奖平台全栈与 CI/CD</li>
+          <li>技术深挖：Redis 分布式锁、秒杀系统设计、并发与缓存</li>
+          <li>AI 工程：Agent、MCP、LLM 集成、AI 辅助开发</li>
+          <li>运维实战：生产数据修正、监控、性能排查</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-[var(--white)] mb-4">常用技术栈</h2>
+        <div class="flex flex-wrap gap-2">
+          {
+            [
+              "Java",
+              "Spring Boot",
+              "Spring Cloud",
+              "MyBatis-Plus",
+              "MySQL",
+              "PostgreSQL",
+              "Redis",
+              "Vue 3",
+              "Docker",
+              "Nginx",
+              "Linux",
+              "Claude Code",
+              "Codex",
+              "MCP",
+              "RAG",
+            ].map((tech) => (
+              <span class="px-3 py-1.5 text-sm rounded-full border border-[var(--white-icon-tr)] text-[var(--white-icon)]">
+                {tech}
+              </span>
+            ))
+          }
+        </div>
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-semibold text-[var(--white)] mb-4">联系我</h2>
+        <p>
+          GitHub：
+          <a
+            href="https://github.com/Lurbing7"
+            target="_blank"
+            class="text-[var(--sec)] hover:underline"
+          >
+            Lurbing7
+          </a>
+          ，欢迎在 GitHub 讨论或留言。
+        </p>
+      </section>
+    </div>
+  </main>
+</Layout>

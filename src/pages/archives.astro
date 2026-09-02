@@ -1,0 +1,51 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getAllPosts, formatDate, postSlug, u } from "@/lib/posts";
+
+const posts = await getAllPosts();
+const byYear = new Map<number, typeof posts>();
+for (const p of posts) {
+  const y = p.data.date.getFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(p);
+}
+const years = [...byYear.entries()].sort((a, b) => b[0] - a[0]);
+---
+
+<Layout title="归档 · 云忆" description="按年份归档浏览云忆博客的全部文章">
+  <main class="max-w-3xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+    <p class="text-lg text-[var(--sec)] mb-2 tracking-wide">归档</p>
+    <h1 class="text-3xl md:text-4xl font-semibold text-[var(--white)] mb-2">文章归档</h1>
+    <p class="text-sm text-[var(--white-icon)] mb-10">共 {posts.length} 篇</p>
+
+    {
+      years.map(([year, list]) => (
+        <section class="mb-12">
+          <h2 class="text-2xl font-semibold text-[var(--white)] mb-4 flex items-baseline gap-3">
+            {year}
+            <span class="text-sm font-normal text-[var(--white-icon)]">{list.length} 篇</span>
+          </h2>
+          <div class="border-t border-[#ffffff10]">
+            {
+              list.map((post) => (
+                <article class="border-b border-[#ffffff10]">
+                  <a
+                    href={u(`/post/${postSlug(post)}/`)}
+                    class="grid grid-cols-[70px_1fr] gap-x-4 items-baseline py-4 hover:bg-[#ffffff08] rounded-lg px-2 -mx-2 transition-colors"
+                  >
+                    <time class="text-xs text-[var(--white-icon)] tabular-nums">
+                      {formatDate(post.data.date)}
+                    </time>
+                    <span class="text-base font-medium text-[var(--white)] hover:text-[var(--sec)] transition-colors">
+                      {post.data.title}
+                    </span>
+                  </a>
+                </article>
+              ))
+            }
+          </div>
+        </section>
+      ))
+    }
+  </main>
+</Layout>
