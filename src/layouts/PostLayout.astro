@@ -14,7 +14,7 @@ const { Content } = await render(post);
 const minutes = readingTime(post);
 ---
 
-<main class="max-w-4xl mx-auto px-6 pt-28 md:pt-40 pb-16">
+<main class="mx-auto px-6 pt-28 md:pt-40 pb-16 w-[min(94%,160rem)]">
   <article>
     <header class="mb-10">
       <div class="flex flex-wrap items-center gap-3 mb-5">
@@ -115,9 +115,9 @@ const minutes = readingTime(post);
 </main>
 
 <style is:global>
-  /* 阅读舒适度：正文放大 + 行高放宽 */
+  /* 阅读舒适度：字号随屏幕微调（vw），正文/行高放宽 */
   #article-content {
-    font-size: 1.06rem;
+    font-size: clamp(1.06rem, 1rem + 0.16vw, 1.28rem);
     line-height: 1.95;
     color: var(--white);
   }
